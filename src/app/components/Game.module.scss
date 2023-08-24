@@ -1,0 +1,17 @@
+.rightContainer {
+  position: absolute;
+  right: 20px;
+  top: 10vh;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.wordBlockContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

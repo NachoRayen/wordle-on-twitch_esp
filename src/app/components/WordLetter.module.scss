@@ -1,0 +1,22 @@
+@use "sass:math";
+$size: 60px;
+
+.letter {
+    width: $size;
+    height: $size;
+    margin: 0 5px;
+    text-align: center;
+    line-height: $size;
+    border: 3px solid rgb(38, 38, 38);
+    border-radius: math.div($size, 4);
+    font-size: 30px;
+    box-sizing: content-box;
+}
+
+.green {
+  background-color: forestgreen;
+}
+
+.yellow {
+  background-color: goldenrod;
+}
