@@ -1,4 +1,17 @@
 .block {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
+  width: 100%;
+}
+
+.user {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.word {
+  display: flex;
+  align-items: center;
 }

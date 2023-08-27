@@ -2,19 +2,8 @@ import React, { useState } from 'react';
 import styles from './EntryField.module.scss'
 
 function EntryField(props) {
-  const { handleWordEntry, wordLength } = props;
+  const { addChatMessage, wordLength } = props;
   const [getWord, setWord] = useState('');
-  const tmi = require('tmi.js');
-  const client = new tmi.Client({
-    channels: ['HagathaChristieTTV']
-  });
-
-  client.connect();
-
-  client.on('message', (channel, tags, message, self) => {
-    handleWordEntry(message)
-  });
-
   const handleInputChange = (event) => {
     setWord(event.target.value);
   };
@@ -28,7 +17,7 @@ function EntryField(props) {
   const handleButtonClick = () => {
     if (getWord.length === wordLength) {
       document.getElementById("wordInput").value = ""; //Clear input field
-      handleWordEntry(getWord);
+      addChatMessage(getWord, 'User', '#FFFFF');
     }
   }
 

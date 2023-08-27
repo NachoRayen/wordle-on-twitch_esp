@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Game.module.scss';
 import Keyboard from './keyboard';
 import WordBlock from './wordBlock';
@@ -9,10 +9,37 @@ import wordList from '../words.json';
 
 export default function Game() {
   const [getAnswer, setAnswer] = useState("");
+  const [getChatMessages, setChatMessages] = useState([]);
   const [getGuessArray, setGuessArray] = useState([]);
+  const [getChatArray, setChatArray] = useState([]);
   const [getLetterStatus, setLetterStatus] = useState({});
+  const [getTimeoutStatus, setTimeoutStatus] = useState({});
+  const prevDependencyRef = useRef();
   const wordLength = 5;
+  const timeoutLength = 3000;
+  const tmi = require('tmi.js');
+  const client = new tmi.Client({
+    channels: ['HagathaChristieTTV']
+  });
 
+  client.on('message', (channel, tags, message, self) => {
+    addChatMessage(message, tags['display-name'], tags['color']);
+  });
+
+  const timeoutUser = (user) => {
+    setTimeoutStatus(prevObject => ({
+      ...prevObject,
+      [user]: true,
+    }));
+    // console.log('Timed out ' + user);
+    setTimeout(function () {
+      setTimeoutStatus(prevObject => ({
+        ...prevObject,
+        [user]: false,
+      }));
+      // console.log('Untimed out ' + user);
+    }, timeoutLength);
+  }
 
   // Reset the object keeping track of the letter status to all -1
   const initializeLetterStatus = () => {
@@ -42,10 +69,9 @@ export default function Game() {
     });
   }
 
-  // Add a word to the array of guessed words
-  const updateGuessArray = newWord => {
-    setGuessArray([...getGuessArray, newWord]);
-  }
+  // // Add a word to the array of guessed words
+  // const addGuess = (newWord, user, color) => {
+  // }
 
   // Set the answer to a new random word from the list
   const setAnswerAsRandomWord = () => {
@@ -56,7 +82,7 @@ export default function Game() {
       newWord = answerList[Math.floor(Math.random() * answerList.length)];
     }
 
-    console.log(newWord);
+    // console.log(newWord);
     setAnswer(newWord);
   }
 
@@ -64,39 +90,71 @@ export default function Game() {
   const reset = () => {
     setAnswerAsRandomWord();
     setGuessArray([]);
+    setChatArray([]);
     initializeLetterStatus();
+    setTimeoutStatus({});
+  }
+
+  const isUserTimedOut = (user) => {
+    // console.log(getTimeoutStatus);
+    return getTimeoutStatus[user];
+  }
+
+  const handleValidGuess = (word, user, color) => {
+    var username = user.toLowerCase();
+    if (!isUserTimedOut(username)) {
+      // console.log(getGuessArray);
+      setGuessArray(prevGuessArray => [...prevGuessArray, word]);
+      let newChatEntry = [word, user, color];
+      // console.log(getChatArray);
+      setChatArray(prevChatArray => [...prevChatArray, newChatEntry]);
+      timeoutUser(username);
+    }
   }
 
   // Function called when a new word is guessed
-  const handleWordEntry = word => {
+  const handleWordEntry = (word, user, color) => {
     if (word.length !== wordLength) { return } // not the right length
     if (getGuessArray.includes(word)) { return }; // already guessed
     if (wordList.includes(word)) { //If it's a valid word, add it the list of guesses so far
-      updateGuessArray(word);
+      handleValidGuess(word, user, color);
     }
     if (word === getAnswer) { //If it's the correct answer, show and alert and reset the game board
       setTimeout(function () {
-        alert("Correct!");
         reset();
-      }, 300);
+      }, 1000);
     }
+  }
+
+  const addChatMessage = (word, user, color) => {
+    let newChatMessage = [word, user, color];
+    setChatMessages(prevChatMessages => [...prevChatMessages, newChatMessage]);
   }
 
   useEffect(() => {
     setAnswerAsRandomWord();
     initializeLetterStatus();
+    client.connect();
   }, []);
+
+  useEffect(() => {
+    if(prevDependencyRef.current !== undefined){
+      let latestChat = getChatMessages[getChatMessages.length - 1];
+      handleWordEntry(latestChat[0], latestChat[1], latestChat[2]);
+    }
+    prevDependencyRef.current = getChatMessages;
+  }, [getChatMessages]);
 
   return (
     <>
       <Keyboard letterStatus={getLetterStatus} />
       <div className={styles.rightContainer}>
         <div className={styles.wordBlockContainer}>
-          {getGuessArray.map((word, index) => (
-            <WordBlock key={index} word={word} answer={getAnswer} updateLetterStatus={updateLetterStatus} />
+          {getChatArray.map((chatEntry, index) => (
+            <WordBlock key={index} word={chatEntry[0]} user={chatEntry[1]} color={chatEntry[2]} answer={getAnswer} updateLetterStatus={updateLetterStatus} />
           ))}
         </div>
-        <EntryField handleWordEntry={handleWordEntry} wordLength={wordLength} />
+        <EntryField addChatMessage={addChatMessage} wordLength={wordLength} />
       </div>
     </>
   )

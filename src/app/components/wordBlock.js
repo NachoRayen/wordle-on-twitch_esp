@@ -3,7 +3,7 @@ import styles from './WordBlock.module.scss'
 import WordLetter from './wordLetter';
 
 function WordBlock(props) {
-  const { word, answer, updateLetterStatus } = props;
+  const { word, user, color, answer, updateLetterStatus } = props;
   const [getStatusArray, setStatusArray] = useState(Array(word.length).fill(0));
   const answerLetterArray = answer.split('');
   const wordLetterArray = word.split('');
@@ -50,9 +50,14 @@ function WordBlock(props) {
 
   return (
     <div className={styles.block}>
-      {wordLetterArray.map((letter, index) => (
-        <WordLetter key={index} letter={letter} status={getStatusArray[index]} />
-      ))}
+      <span className={styles.user} style={{ color: color }}>
+        {user.length <= 10 ? user : user.slice(0, 7) + '...'}
+      </span>
+      <div className={styles.word}>
+        {wordLetterArray.map((letter, index) => (
+          <WordLetter key={index} letter={letter} status={getStatusArray[index]} />
+        ))}
+      </div>
     </div>
   );
 }
