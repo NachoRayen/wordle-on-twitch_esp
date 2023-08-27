@@ -52,7 +52,7 @@ export default function Game() {
     let newWord = getAnswer;
 
     // Make sure it's actually a new word (don't repeat the same word twice)
-    while (newWord == getAnswer) {
+    while (newWord === getAnswer) {
       newWord = answerList[Math.floor(Math.random() * answerList.length)];
     }
 
