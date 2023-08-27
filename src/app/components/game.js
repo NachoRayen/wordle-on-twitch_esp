@@ -11,6 +11,7 @@ export default function Game() {
   const [getAnswer, setAnswer] = useState("");
   const [getGuessArray, setGuessArray] = useState([]);
   const [getLetterStatus, setLetterStatus] = useState({});
+  const wordLength = 5;
 
 
   // Reset the object keeping track of the letter status to all -1
@@ -68,7 +69,7 @@ export default function Game() {
 
   // Function called when a new word is guessed
   const handleWordEntry = word => {
-    if (word.length !== 5) { return } // not the right length
+    if (word.length !== wordLength) { return } // not the right length
     if (getGuessArray.includes(word)) { return }; // already guessed
     if (wordList.includes(word)) { //If it's a valid word, add it the list of guesses so far
       updateGuessArray(word);
@@ -95,7 +96,7 @@ export default function Game() {
             <WordBlock key={index} word={word} answer={getAnswer} updateLetterStatus={updateLetterStatus} />
           ))}
         </div>
-        <EntryField handleWordEntry={handleWordEntry} />
+        <EntryField handleWordEntry={handleWordEntry} wordLength={wordLength} />
       </div>
     </>
   )

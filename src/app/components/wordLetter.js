@@ -4,7 +4,7 @@ function WordLetter(props) {
 const { letter, status } = props;
 
   return (
-    <div className={`${styles.letter} ${status == 2 ? styles.green : ''} ${status == 1 ? styles.yellow : ''}`}>
+    <div className={`${styles.letter} ${status === 2 ? styles.green : ''} ${status === 1 ? styles.yellow : ''}`}>
         {letter}
     </div>
   );
