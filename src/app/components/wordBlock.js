@@ -78,14 +78,14 @@ function WordBlock(props) {
     }
     setStatusArray([...tempArray]);
 
-    //send letter data to game component to update keybaord
+    //send letter data to game component to update keyboard
     let tempObject = {};
     for (let i = 0; i < wordLetterArray.length; i++) {
       if (!tempObject[wordLetterArray[i]] || tempObject[wordLetterArray[i]] < tempArray[i]) {
         tempObject[wordLetterArray[i]] = tempArray[i];
       }
     }
-    updateLetterStatus(tempObject);
+    updateLetterStatus(tempObject, user);
   }
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Game.module.scss';
+import Scoreboard from './scoreboard';
 import Keyboard from './keyboard';
 import WordBlock from './wordBlock';
 import EntryField from './entryField';
@@ -14,6 +15,7 @@ export default function Game() {
   const [getChatArray, setChatArray] = useState([]);
   const [getLetterStatus, setLetterStatus] = useState({});
   const [getTimeoutStatus, setTimeoutStatus] = useState({});
+  const [getUserScores, setUserScores] = useState({});
   const prevDependencyRef = useRef();
   const wordLength = 5;
   const timeoutLength = 3000;
@@ -58,20 +60,33 @@ export default function Game() {
   // 0 = letter not in word
   // 1 = letter in wrong place
   // 2 = letter in ccorrect place
-  const updateLetterStatus = (statusObject) => {
+  const updateLetterStatus = (statusObject, user) => {
+    let scoreChange = 0;
+
     Object.keys(statusObject).forEach(function (letter) {
       if (getLetterStatus[letter] < statusObject[letter]) {
+        let letterDifference = statusObject[letter] - getLetterStatus[letter];
+        scoreChange += letterDifference
+        // console.log("Letter difference: " + letterDifference);
         setLetterStatus(prevObject => ({
           ...prevObject,
           [letter]: statusObject[letter],
         }));
       }
     });
+    updateScores(user, scoreChange);
   }
 
-  // // Add a word to the array of guessed words
-  // const addGuess = (newWord, user, color) => {
-  // }
+  const updateScores = (user, scoreChange) => {
+    let currentScore = getUserScores[user] || 0;
+    let newScore = currentScore + scoreChange;
+    // console.log(user + "'s new score: " + newScore);
+    setUserScores(prevObject => ({
+      ...prevObject,
+      [user]: newScore
+    }));
+  }
+
 
   // Set the answer to a new random word from the list
   const setAnswerAsRandomWord = () => {
@@ -101,14 +116,13 @@ export default function Game() {
   }
 
   const handleValidGuess = (word, user, color) => {
-    var username = user.toLowerCase();
-    if (!isUserTimedOut(username)) {
+    if (!isUserTimedOut(user)) {
       // console.log(getGuessArray);
       setGuessArray(prevGuessArray => [...prevGuessArray, word]);
       let newChatEntry = [word, user, color];
       // console.log(getChatArray);
       setChatArray(prevChatArray => [...prevChatArray, newChatEntry]);
-      timeoutUser(username);
+      timeoutUser(user);
     }
   }
 
@@ -120,6 +134,7 @@ export default function Game() {
       handleValidGuess(word, user, color);
     }
     if (word === getAnswer) { //If it's the correct answer, show and alert and reset the game board
+      updateScores(user, wordLength);
       setTimeout(function () {
         reset();
       }, 1000);
@@ -138,7 +153,7 @@ export default function Game() {
   }, []);
 
   useEffect(() => {
-    if(prevDependencyRef.current !== undefined){
+    if (prevDependencyRef.current !== undefined) {
       let latestChat = getChatMessages[getChatMessages.length - 1];
       handleWordEntry(latestChat[0], latestChat[1], latestChat[2]);
     }
@@ -146,8 +161,13 @@ export default function Game() {
   }, [getChatMessages]);
 
   return (
-    <>
-      <Keyboard letterStatus={getLetterStatus} />
+    <div className={styles.gameContainer}>
+      <div className={styles.leftContainer}>
+        <Scoreboard getUserScores={getUserScores} />
+      </div>
+      <div className={styles.middleContainer}>
+        <Keyboard letterStatus={getLetterStatus} />
+      </div>
       <div className={styles.rightContainer}>
         <div className={styles.wordBlockContainer}>
           {getChatArray.map((chatEntry, index) => (
@@ -156,6 +176,6 @@ export default function Game() {
         </div>
         <EntryField addChatMessage={addChatMessage} wordLength={wordLength} />
       </div>
-    </>
+    </div>
   )
 }

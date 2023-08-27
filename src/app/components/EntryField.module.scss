@@ -1,7 +1,9 @@
 .entryContainer {
   margin-top: 20px;
   font-size: 30px;
-  align-self: flex-end;
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
 
   input {
     margin-right: 5px;
