@@ -116,28 +116,28 @@ export default function Game() {
   }
 
   const handleValidGuess = (word, user, color) => {
-    if (!isUserTimedOut(user)) {
-      // console.log(getGuessArray);
-      setGuessArray(prevGuessArray => [...prevGuessArray, word]);
-      let newChatEntry = [word, user, color];
-      // console.log(getChatArray);
-      setChatArray(prevChatArray => [...prevChatArray, newChatEntry]);
-      timeoutUser(user);
-    }
+    // console.log(getGuessArray);
+    setGuessArray(prevGuessArray => [...prevGuessArray, word]);
+    let newChatEntry = [word, user, color];
+    // console.log(getChatArray);
+    setChatArray(prevChatArray => [...prevChatArray, newChatEntry]);
+    timeoutUser(user);
   }
 
   // Function called when a new word is guessed
   const handleWordEntry = (word, user, color) => {
-    if (word.length !== wordLength) { return } // not the right length
-    if (getGuessArray.includes(word)) { return }; // already guessed
-    if (wordList.includes(word)) { //If it's a valid word, add it the list of guesses so far
-      handleValidGuess(word, user, color);
-    }
-    if (word === getAnswer) { //If it's the correct answer, show and alert and reset the game board
-      updateScores(user, wordLength);
-      setTimeout(function () {
-        reset();
-      }, 1000);
+    if (!isUserTimedOut(user)) {
+      if (word.length !== wordLength) { return } // not the right length
+      if (getGuessArray.includes(word)) { return }; // already guessed
+      if (wordList.includes(word)) { //If it's a valid word, add it the list of guesses so far
+        handleValidGuess(word, user, color);
+      }
+      if (word === getAnswer) { //If it's the correct answer, show and alert and reset the game board
+        updateScores(user, wordLength);
+        setTimeout(function () {
+          reset();
+        }, 1000);
+      }
     }
   }
 

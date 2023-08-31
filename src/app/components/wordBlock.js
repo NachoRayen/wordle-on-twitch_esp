@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './WordBlock.module.scss'
 import WordLetter from './wordLetter';
+import CooldownTimer from './cooldownTimer';
 
 function WordBlock(props) {
   const { word, user, color, answer, updateLetterStatus } = props;
@@ -23,7 +24,7 @@ function WordBlock(props) {
     const bLinear = b <= 0.04045 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
     return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
   }
-  
+
   function contrastRatio(color1, color2) {
     const luminance1 = rgbToLuminance(color1);
     const luminance2 = rgbToLuminance(color2);
@@ -94,6 +95,7 @@ function WordBlock(props) {
 
   return (
     <div className={styles.block}>
+      <CooldownTimer />
       <span className={styles.user} style={{ color: adjustConstrast(color) }}>
         {user.length <= 10 ? user : user.slice(0, 7) + '...'}
       </span>
