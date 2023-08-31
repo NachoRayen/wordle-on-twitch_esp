@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import styles from './CooldownTimer.module.scss'
 
-function CooldownTimer() {
+function CooldownTimer(props) {
+  const { hide } = props;
   const timerCircleRef = useRef(null);
 
 
@@ -35,7 +36,7 @@ function CooldownTimer() {
   }, []);
 
   return (
-    <div ref={timerCircleRef} className={styles.cooldownTimer}>
+    <div ref={timerCircleRef} className={styles.cooldownTimer} style={{ visibility: hide ? 'hidden' : 'visible' }}>
     </div>
   );
 }

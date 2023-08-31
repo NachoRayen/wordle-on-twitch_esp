@@ -6,6 +6,7 @@ import CooldownTimer from './cooldownTimer';
 function WordBlock(props) {
   const { word, user, color, answer, updateLetterStatus } = props;
   const [getStatusArray, setStatusArray] = useState(Array(word.length).fill(0));
+  const [isCorrect, setIsCorrect] = useState(false);
   const answerLetterArray = answer.split('');
   const wordLetterArray = word.split('');
 
@@ -91,11 +92,14 @@ function WordBlock(props) {
 
   useEffect(() => {
     initStatusArray();
+    if(word === answer) {
+      setIsCorrect(true);
+    }
   }, []);
 
   return (
     <div className={styles.block}>
-      <CooldownTimer />
+      <CooldownTimer hide={isCorrect} />
       <span className={styles.user} style={{ color: adjustConstrast(color) }}>
         {user.length <= 10 ? user : user.slice(0, 7) + '...'}
       </span>

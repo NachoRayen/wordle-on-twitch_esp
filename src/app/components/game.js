@@ -97,7 +97,7 @@ export default function Game() {
       newWord = answerList[Math.floor(Math.random() * answerList.length)];
     }
 
-    // console.log(newWord);
+    console.log(newWord);
     setAnswer(newWord);
   }
 
