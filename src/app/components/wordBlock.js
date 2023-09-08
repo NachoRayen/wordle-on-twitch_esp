@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './WordBlock.module.scss'
 import WordLetter from './wordLetter';
 import CooldownTimer from './cooldownTimer';
+import { gsap } from 'gsap';
 
 function WordBlock(props) {
   const { word, user, color, answer, updateLetterStatus, updateAnswerStatus } = props;
   const [getStatusArray, setStatusArray] = useState(Array(word.length).fill(0));
   const answerLetterArray = answer.split('');
   const wordLetterArray = word.split('');
+  const solveBonus = word.length;
+  const scoreBonusRef = useRef(null);
 
   const hexToRGB = (hexCode) => {
     hexCode = hexCode.replace('#', '');
@@ -91,13 +94,23 @@ function WordBlock(props) {
     updateAnswerStatus(tempArray);
   }
 
+  const animateScoreBonus = () => {
+    let scoreBonus = scoreBonusRef.current;
+    if (scoreBonus) {
+      let tl = gsap.timeline();
+      tl.fromTo(scoreBonus, { opacity: 0 }, { opacity: 0, duration: 1.5 });
+      tl.fromTo(scoreBonus, { opacity: 1, y: 0 }, { opacity: 0, y: -30, ease: "linear", duration: 1.5 });
+    }
+  }
+
   useEffect(() => {
     initStatusArray();
+    animateScoreBonus();
   }, []);
 
   return (
     <div className={styles.block}>
-      <CooldownTimer hide={word === answer} />
+      {word === answer ? (<div ref={scoreBonusRef} className={styles.scoreBonus}>+{solveBonus}</div>) : (<CooldownTimer />)}
       <span className={styles.user} style={{ color: adjustConstrast(color) }}>
         {user.length <= 10 ? user : user.slice(0, 7) + '...'}
       </span>

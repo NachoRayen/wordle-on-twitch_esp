@@ -3,7 +3,6 @@ import { gsap } from 'gsap';
 import styles from './CooldownTimer.module.scss'
 
 function CooldownTimer(props) {
-  const { hide } = props;
   const timerCircleRef = useRef(null);
 
 
@@ -36,7 +35,7 @@ function CooldownTimer(props) {
   }, []);
 
   return (
-    <div ref={timerCircleRef} className={styles.cooldownTimer} style={{ visibility: hide ? 'hidden' : 'visible' }}>
+    <div ref={timerCircleRef} className={styles.cooldownTimer}>
     </div>
   );
 }
