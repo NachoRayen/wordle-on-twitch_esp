@@ -73,7 +73,7 @@ function WordBlock(props) {
       let letterFound = false;
       //Check other letters in answer
       for (let j = 0; j < wordLetterArray.length && !letterFound; j++) {
-        if (wordLetterArray[i] === answerCheckArray[j]) {
+        if (wordLetterArray[i] === answerCheckArray[j] && tempArray[i] !== 2) {
           tempArray[i] = 1;
           answerCheckArray[j] = '-';
           letterFound = true;

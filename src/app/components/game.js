@@ -135,6 +135,7 @@ export default function Game(props) {
   const reset = () => {
     setAnswerAsRandomWord();
     setGuessArray([]);
+    setChatMessages([]);
     setChatArray([]);
     initializeLetterStatus();
     initializeAnswerStatus();
@@ -157,7 +158,8 @@ export default function Game(props) {
   }
 
   // Function called when a new word is guessed
-  const handleWordEntry = (word, user, color) => {
+  const handleWordEntry = (chat, user, color) => {
+    let word = chat.substr(0,wordLength); //twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
     if (!isUserTimedOut(user)) {
       if (isWordFound) { return } // word for this round has already been found
       if (word.length !== wordLength) { return } // not the right length
@@ -187,9 +189,9 @@ export default function Game(props) {
   }, []);
 
   useEffect(() => {
-    if (prevDependencyRef.current !== undefined) {
+    if (prevDependencyRef.current !== undefined && getChatMessages.length) {
       let latestChat = getChatMessages[getChatMessages.length - 1];
-      handleWordEntry(latestChat[0], latestChat[1], latestChat[2]);
+      handleWordEntry(latestChat[0].trim(), latestChat[1], latestChat[2]);
     }
     prevDependencyRef.current = getChatMessages;
   }, [getChatMessages]);
