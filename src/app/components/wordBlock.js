@@ -10,6 +10,7 @@ function WordBlock(props) {
   const answerLetterArray = answer.split('');
   const wordLetterArray = word.split('');
   const solveBonus = word.length;
+  const wordContRef = useRef(null);
   const wordRef = useRef(null);
   const scoreBonusRef = useRef(null);
 
@@ -104,26 +105,41 @@ function WordBlock(props) {
     }
   }
 
-  const animateWord = () => {
+  const animateWordEntry = () => {
+    let wordCont = wordContRef.current;
+    if (wordCont) {
+      gsap.fromTo(wordCont, { maxHeight: 0 }, { maxHeight: 80, ease: "linear", duration: 0.5 })
+    }
+  }
+
+  const animateLettersOnWin = () => {
     let word = wordRef.current;
-    if (word) {
-      gsap.fromTo(word, {maxHeight: 0}, {maxHeight: 80, ease: "linear", duration: 0.5})
+    let wordCont = wordContRef.current;
+    if (word && word.children && wordCont) {
+      let children = word.children;
+      let tl = gsap.timeline();
+      tl.fromTo(children, { opacity: 1, y: 0 }, { opacity: 1, y: 0, duration: 1.5 });
+      tl.fromTo(children, { y: 0 }, { y: -15, ease: "power2", duration: 0.45, stagger: 0.15 });
+      tl.fromTo(children, { y: -15 }, { y: 0, ease: "power2", duration: 0.25, stagger: 0.15, delay: -0.8 });
     }
   }
 
   useEffect(() => {
     initStatusArray();
-    animateWord();
-    animateScoreBonus();
+    animateWordEntry();
+    if (word === answer) {
+      animateLettersOnWin();
+      animateScoreBonus();
+    }
   }, []);
 
   return (
-    <div className={styles.block} ref={wordRef}>
+    <div className={styles.block} ref={wordContRef}>
       {word === answer ? (<div ref={scoreBonusRef} className={styles.scoreBonus}>+{solveBonus}</div>) : (<CooldownTimer />)}
       <span className={styles.user} style={{ color: adjustConstrast(color) }}>
         {user.length <= 10 ? user : user.slice(0, 7) + '...'}
       </span>
-      <div className={styles.word}>
+      <div className={styles.word} ref={wordRef}>
         {wordLetterArray.map((letter, index) => (
           <WordLetter key={index} letter={letter} status={getStatusArray[index]} />
         ))}

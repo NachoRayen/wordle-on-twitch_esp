@@ -172,7 +172,7 @@ export default function Game(props) {
         updateScores(user, wordLength); // give bonus points for getting the answer
         setTimeout(function () {
           reset();
-        }, 3000);
+        }, 4500);
       }
     }
   }
