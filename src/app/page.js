@@ -13,6 +13,10 @@ export default function Home() {
   const [isConnected, setIsConnected] = useState(false);
   const tmi = require('tmi.js');
 
+  const playOffline = () => {
+    setIsConnected(true);
+  }
+
   const changeChannel = (channel) => {
     setChannel(channel);
   }
@@ -69,7 +73,7 @@ export default function Home() {
       {!isConnected ? (
         !isConnecting ? (
           !isLoading ? (
-            <StartingScreen changeChannel={changeChannel} />
+            <StartingScreen changeChannel={changeChannel} playOffline={playOffline} />
           ) : (
             <span>Loading...</span>
           )

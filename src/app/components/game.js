@@ -24,9 +24,11 @@ export default function Game(props) {
   const wordLength = 5;
   const timeoutLength = 3000;
 
-  client.on('message', (channel, tags, message, self) => {
-    addChatMessage(message, tags['display-name'], tags['color']);
-  });
+  if (client) {
+    client.on('message', (channel, tags, message, self) => {
+      addChatMessage(message, tags['display-name'], tags['color']);
+    });
+  }
 
   const timeoutUser = (user) => {
     setTimeoutStatus(prevObject => ({
@@ -52,7 +54,7 @@ export default function Game(props) {
     }
     setAnswerStatus(tempAnswerStatus);
   }
-  
+
   // Reset the object keeping track of the letter status to all -1
   const initializeLetterStatus = () => {
     const qwertyAlphabet = "qwertyuiopasdfghjklzxcvbnm";
@@ -157,7 +159,7 @@ export default function Game(props) {
   // Function called when a new word is guessed
   const handleWordEntry = (word, user, color) => {
     if (!isUserTimedOut(user)) {
-      if(isWordFound) { return } // word for this round has already been found
+      if (isWordFound) { return } // word for this round has already been found
       if (word.length !== wordLength) { return } // not the right length
       if (getGuessArray.includes(word)) { return }; // already guessed
       if (wordList.includes(word)) { //If it's a valid word, add it the list of guesses so far
@@ -207,7 +209,9 @@ export default function Game(props) {
             <WordBlock key={index} word={chatEntry[0]} user={chatEntry[1]} color={chatEntry[2]} answer={getAnswer} updateLetterStatus={updateLetterStatus} updateAnswerStatus={updateAnswerStatus} />
           ))}
         </div>
-        <EntryField addChatMessage={addChatMessage} wordLength={wordLength} />
+        {!client ? (
+          <EntryField addChatMessage={addChatMessage} wordLength={wordLength} />
+        ) : (null)}
       </div>
     </div>
   )
