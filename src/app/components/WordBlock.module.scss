@@ -5,11 +5,14 @@
   align-items: center;
   margin-bottom: 10px;
   width: 100%;
+  max-height: 0;
+  overflow-y: clip;
 }
 
 .user {
   font-weight: bold;
   margin-right: 10px;
+  align-self: center;
 }
 
 .word {

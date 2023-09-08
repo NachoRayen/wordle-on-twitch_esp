@@ -10,6 +10,7 @@ function WordBlock(props) {
   const answerLetterArray = answer.split('');
   const wordLetterArray = word.split('');
   const solveBonus = word.length;
+  const wordRef = useRef(null);
   const scoreBonusRef = useRef(null);
 
   const hexToRGB = (hexCode) => {
@@ -103,13 +104,21 @@ function WordBlock(props) {
     }
   }
 
+  const animateWord = () => {
+    let word = wordRef.current;
+    if (word) {
+      gsap.fromTo(word, {maxHeight: 0}, {maxHeight: 80, ease: "linear", duration: 0.5})
+    }
+  }
+
   useEffect(() => {
     initStatusArray();
+    animateWord();
     animateScoreBonus();
   }, []);
 
   return (
-    <div className={styles.block}>
+    <div className={styles.block} ref={wordRef}>
       {word === answer ? (<div ref={scoreBonusRef} className={styles.scoreBonus}>+{solveBonus}</div>) : (<CooldownTimer />)}
       <span className={styles.user} style={{ color: adjustConstrast(color) }}>
         {user.length <= 10 ? user : user.slice(0, 7) + '...'}
