@@ -116,11 +116,11 @@ function WordBlock(props) {
     let word = wordRef.current;
     let wordCont = wordContRef.current;
     if (word && word.children && wordCont) {
-      let children = word.children;
+      let letters = word.children;
       let tl = gsap.timeline();
-      tl.fromTo(children, { opacity: 1, y: 0 }, { opacity: 1, y: 0, duration: 1.5 });
-      tl.fromTo(children, { y: 0 }, { y: -15, ease: "power2", duration: 0.45, stagger: 0.15 });
-      tl.fromTo(children, { y: -15 }, { y: 0, ease: "power2", duration: 0.25, stagger: 0.15, delay: -0.8 });
+      tl.fromTo(letters, { y: 0 }, { y: 0, duration: 1.5 });
+      tl.fromTo(letters, { y: 0 }, { y: -15, ease: "power2", duration: 0.45, stagger: 0.15 });
+      tl.fromTo(letters, { y: -15 }, { y: 0, ease: "power2", duration: 0.25, stagger: 0.15, delay: -0.8 });
     }
   }
 
@@ -134,15 +134,17 @@ function WordBlock(props) {
   }, []);
 
   return (
-    <div className={styles.block} ref={wordContRef}>
-      {word === answer ? (<div ref={scoreBonusRef} className={styles.scoreBonus}>+{solveBonus}</div>) : (<CooldownTimer />)}
-      <span className={styles.user} style={{ color: adjustConstrast(color) }}>
-        {user.length <= 10 ? user : user.slice(0, 7) + '...'}
-      </span>
-      <div className={styles.word} ref={wordRef}>
-        {wordLetterArray.map((letter, index) => (
-          <WordLetter key={index} letter={letter} status={getStatusArray[index]} />
-        ))}
+    <div className={styles.blockCont} ref={wordContRef}>
+      <div className={styles.block}>
+        {word === answer ? (<div ref={scoreBonusRef} className={styles.scoreBonus}>+{solveBonus}</div>) : (<CooldownTimer />)}
+        <span className={styles.user} style={{ color: adjustConstrast(color) }}>
+          {user.length <= 10 ? user : user.slice(0, 7) + '...'}
+        </span>
+        <div className={styles.word} ref={wordRef}>
+          {wordLetterArray.map((letter, index) => (
+            <WordLetter key={index} letter={letter} status={getStatusArray[index]} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,3 +1,7 @@
+.blockCont {
+  overflow-y: clip;
+}
+
 .block {
   position: relative;
   display: flex;
@@ -5,8 +9,6 @@
   align-items: center;
   padding-top: 15px;
   width: 100%;
-  max-height: 0;
-  overflow-y: clip;
 }
 
 .user {

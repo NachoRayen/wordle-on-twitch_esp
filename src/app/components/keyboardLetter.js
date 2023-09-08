@@ -11,7 +11,9 @@ function KeyboardLetter(props) {
 
   const animateScore = () => {
     let score = scoreRef.current;
-    gsap.fromTo(score, { opacity: 1, y: 0 }, { opacity: 0, y: -30, ease: "linear", duration: 1.5 });
+    let tl = gsap.timeline();
+    tl.fromTo(score, { opacity: 0}, { opacity: 0, duration: 0.5 });
+    tl.fromTo(score, { opacity: 1, y: 0 }, { opacity: 0, y: -30, ease: "linear", duration: 1.5 });
   }
 
   useEffect(() => {
@@ -19,7 +21,7 @@ function KeyboardLetter(props) {
     if (status === -1 || status === undefined) {
       // Keyboard was reset
       setScoreDiff();
-    } else if (diff !== 0 ) {
+    } else if (diff !== 0) {
       setScoreDiff(diff);
       animateScore();
     }
