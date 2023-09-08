@@ -1,0 +1,24 @@
+.letter {
+  --w: 100px;
+  width: var(--w);
+  padding-top: var(--w);
+  border: 1px solid white;
+  border-radius: 15%;
+  position: relative;
+  &:not(:last-child){
+    margin-right: 20px;
+  }
+}
+
+.text {
+  font-size: 60px;
+  line-height: 60px;
+  position: absolute;
+  top: calc(50% - 30px);
+  width: 100%;
+  left: 0;
+  text-align: center;
+}
+.green {
+  background-color: forestgreen;
+}

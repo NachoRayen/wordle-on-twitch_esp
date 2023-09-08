@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './Game.module.scss';
 import Scoreboard from './scoreboard';
 import Keyboard from './keyboard';
+import BigLetters from './bigLetters';
 import WordBlock from './wordBlock';
 import EntryField from './entryField';
 import answerList from '../solutionwords.json';
@@ -13,6 +14,7 @@ export default function Game() {
   const [getChatMessages, setChatMessages] = useState([]);
   const [getGuessArray, setGuessArray] = useState([]);
   const [getChatArray, setChatArray] = useState([]);
+  const [getAnswerStatus, setAnswerStatus] = useState([]);
   const [getLetterStatus, setLetterStatus] = useState({});
   const [getTimeoutStatus, setTimeoutStatus] = useState({});
   const [getUserScores, setUserScores] = useState({});
@@ -44,6 +46,16 @@ export default function Game() {
     }, timeoutLength);
   }
 
+
+  // Reset the object keeping track of the answer status to all false
+  const initializeAnswerStatus = () => {
+    const tempAnswerStatus = [];
+    for (let i = 0; i < wordLength; i++) {
+      tempAnswerStatus.push(false);
+    }
+    setAnswerStatus(tempAnswerStatus);
+  }
+  
   // Reset the object keeping track of the letter status to all -1
   const initializeLetterStatus = () => {
     const qwertyAlphabet = "qwertyuiopasdfghjklzxcvbnm";
@@ -56,7 +68,25 @@ export default function Game() {
     setLetterStatus(tempLetterStatus);
   }
 
-  // Update the object keeping track of the letter status
+  // Update the object keeping track of the status of each letter in the answer.
+  // Used to update the big letter visual.
+  // The "statusFromGuess" parameter is passed each time a word is added to the guess list, 
+  // and this function updates the corresponding getAnswerStatus entry to true if a letter was newly found in a correct spot.
+  // It never changes it back to false because you cannot "unfind" a letter. (initializeAnswerStatus is used to reset after the word is found)
+  // false = letter not yet found (default state)
+  // true = letter in correct place
+  const updateAnswerStatus = (statusFromGuess) => {
+    let tempAnswerStatus = [...getAnswerStatus];
+    for (let i = 0; i < statusFromGuess.length; i++) {
+      if (statusFromGuess[i] === 2) {
+        tempAnswerStatus[i] = true;
+      }
+    }
+    setAnswerStatus([...tempAnswerStatus]);
+  }
+
+  // Update the object keeping track of the letter status.
+  // Used to update the keyboard visual.
   //-1 = unset (default state)
   // 0 = letter not in word
   // 1 = letter in wrong place
@@ -108,6 +138,7 @@ export default function Game() {
     setGuessArray([]);
     setChatArray([]);
     initializeLetterStatus();
+    initializeAnswerStatus();
     setWordFound(false);
     setTimeoutStatus({});
   }
@@ -152,6 +183,7 @@ export default function Game() {
 
   useEffect(() => {
     setAnswerAsRandomWord();
+    initializeAnswerStatus();
     initializeLetterStatus();
     client.connect();
   }, []);
@@ -170,12 +202,13 @@ export default function Game() {
         <Scoreboard getUserScores={getUserScores} />
       </div>
       <div className={styles.middleContainer}>
+        <BigLetters answer={getAnswer} answerStatus={getAnswerStatus} />
         <Keyboard letterStatus={getLetterStatus} />
       </div>
       <div className={styles.rightContainer}>
         <div className={styles.wordBlockContainer}>
           {getChatArray.map((chatEntry, index) => (
-            <WordBlock key={index} word={chatEntry[0]} user={chatEntry[1]} color={chatEntry[2]} answer={getAnswer} updateLetterStatus={updateLetterStatus} />
+            <WordBlock key={index} word={chatEntry[0]} user={chatEntry[1]} color={chatEntry[2]} answer={getAnswer} updateLetterStatus={updateLetterStatus} updateAnswerStatus={updateAnswerStatus} />
           ))}
         </div>
         <EntryField addChatMessage={addChatMessage} wordLength={wordLength} />
