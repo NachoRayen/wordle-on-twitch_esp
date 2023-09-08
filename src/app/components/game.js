@@ -16,6 +16,7 @@ export default function Game() {
   const [getLetterStatus, setLetterStatus] = useState({});
   const [getTimeoutStatus, setTimeoutStatus] = useState({});
   const [getUserScores, setUserScores] = useState({});
+  const [isWordFound, setWordFound] = useState(false);
   const prevDependencyRef = useRef();
   const wordLength = 5;
   const timeoutLength = 3000;
@@ -107,6 +108,7 @@ export default function Game() {
     setGuessArray([]);
     setChatArray([]);
     initializeLetterStatus();
+    setWordFound(false);
     setTimeoutStatus({});
   }
 
@@ -127,16 +129,18 @@ export default function Game() {
   // Function called when a new word is guessed
   const handleWordEntry = (word, user, color) => {
     if (!isUserTimedOut(user)) {
+      if(isWordFound) { return } // word for this round has already been found
       if (word.length !== wordLength) { return } // not the right length
       if (getGuessArray.includes(word)) { return }; // already guessed
       if (wordList.includes(word)) { //If it's a valid word, add it the list of guesses so far
         handleValidGuess(word, user, color);
       }
       if (word === getAnswer) { //If it's the correct answer, show and alert and reset the game board
-        updateScores(user, wordLength);
+        setWordFound(true); // prevent future guesses until the game has reset
+        updateScores(user, wordLength); // give bonus points for getting the answer
         setTimeout(function () {
           reset();
-        }, 1000);
+        }, 3000);
       }
     }
   }

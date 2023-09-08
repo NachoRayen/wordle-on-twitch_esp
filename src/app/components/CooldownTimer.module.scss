@@ -5,14 +5,6 @@
   width: 30px;
   height: 30px;
   position: relative;
-
-  &::before{
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    inset: 0;
-    background: conic-gradient(var(--c) calc(var(--p)*1%),#0000 0); 
-    // -webkit-mask:radial-gradient(farthest-side,#0000 70%,#000 100%);
-    // mask:radial-gradient(farthest-side,#0000 70%,#000 100%);
-  }
+  border-radius: 50%;
+  background: conic-gradient(var(--c) calc(var(--p)*1%),#0000 0); 
 }

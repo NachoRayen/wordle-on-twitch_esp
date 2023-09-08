@@ -58,26 +58,27 @@ function WordBlock(props) {
     let tempArray = Array(word.length).fill(0);
     let answerCheckArray = [...answerLetterArray];
 
-    //Loop through the letters and check their status
+    //Loop through the letters and check if correct letter is in correct space
     for (let i = 0; i < wordLetterArray.length; i++) {
-      // Correct if correct letter is in correct space
       if (wordLetterArray[i] === answerCheckArray[i]) {
         tempArray[i] = 2;
         answerCheckArray[i] = '-'; //Prevent further checks from counting this found letter
       }
-      else {
-        let letterFound = false;
-        //Check other letters in answer
-        for (let j = 0; j < answerCheckArray.length && !letterFound; j++) {
-          if (wordLetterArray[i] === answerCheckArray[j]) {
-            tempArray[i] = 1;
-            answerCheckArray[j] = '-';
-            letterFound = true;
-          }
+    }
+    //Loop through the letters and check if the letter exists in other spaces
+    for (let i = 0; i < wordLetterArray.length; i++) {
+      let letterFound = false;
+      //Check other letters in answer
+      for (let j = 0; j < answerCheckArray.length && !letterFound; j++) {
+        if (wordLetterArray[i] === answerCheckArray[j]) {
+          tempArray[i] = 1;
+          answerCheckArray[j] = '-';
+          letterFound = true;
         }
       }
-
     }
+
+
     setStatusArray([...tempArray]);
 
     //send letter data to game component to update keyboard
@@ -92,7 +93,7 @@ function WordBlock(props) {
 
   useEffect(() => {
     initStatusArray();
-    if(word === answer) {
+    if (word === answer) {
       setIsCorrect(true);
     }
   }, []);
