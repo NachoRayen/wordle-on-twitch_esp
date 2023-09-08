@@ -9,7 +9,8 @@ import EntryField from './entryField';
 import answerList from '../solutionwords.json';
 import wordList from '../words.json';
 
-export default function Game() {
+export default function Game(props) {
+  const { client } = props;
   const [getAnswer, setAnswer] = useState("");
   const [getChatMessages, setChatMessages] = useState([]);
   const [getGuessArray, setGuessArray] = useState([]);
@@ -18,14 +19,10 @@ export default function Game() {
   const [getLetterStatus, setLetterStatus] = useState({});
   const [getTimeoutStatus, setTimeoutStatus] = useState({});
   const [getUserScores, setUserScores] = useState({});
-  const [isWordFound, setWordFound] = useState(false);
+  const [isWordFound, setIsWordFound] = useState(false);
   const prevDependencyRef = useRef();
   const wordLength = 5;
   const timeoutLength = 3000;
-  const tmi = require('tmi.js');
-  const client = new tmi.Client({
-    channels: ['HagathaChristieTTV']
-  });
 
   client.on('message', (channel, tags, message, self) => {
     addChatMessage(message, tags['display-name'], tags['color']);
@@ -139,7 +136,7 @@ export default function Game() {
     setChatArray([]);
     initializeLetterStatus();
     initializeAnswerStatus();
-    setWordFound(false);
+    setIsWordFound(false);
     setTimeoutStatus({});
   }
 
@@ -167,7 +164,7 @@ export default function Game() {
         handleValidGuess(word, user, color);
       }
       if (word === getAnswer) { //If it's the correct answer, show and alert and reset the game board
-        setWordFound(true); // prevent future guesses until the game has reset
+        setIsWordFound(true); // prevent future guesses until the game has reset
         updateScores(user, wordLength); // give bonus points for getting the answer
         setTimeout(function () {
           reset();
@@ -185,7 +182,6 @@ export default function Game() {
     setAnswerAsRandomWord();
     initializeAnswerStatus();
     initializeLetterStatus();
-    client.connect();
   }, []);
 
   useEffect(() => {

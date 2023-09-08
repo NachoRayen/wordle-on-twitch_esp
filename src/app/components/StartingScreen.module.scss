@@ -1,0 +1,26 @@
+.startingScreen {
+  padding-top: 250px;
+  margin-top: 20px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+}
+
+.text {
+  margin-right: 15px;
+}
+
+.input {
+  margin-right: 15px;
+  font-size: 30px;
+  padding: 5px;
+}
+
+.button {
+  font-size: 30px;
+  padding: 5px;
+  cursor: pointer;
+}

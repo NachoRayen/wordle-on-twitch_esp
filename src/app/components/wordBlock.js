@@ -65,10 +65,10 @@ function WordBlock(props) {
       }
     }
     //Loop through the letters and check if the letter exists in other spaces
-    for (let i = 0; i < wordLetterArray.length; i++) {
+    for (let i = 0; i < answerCheckArray.length; i++) {
       let letterFound = false;
       //Check other letters in answer
-      for (let j = 0; j < answerCheckArray.length && !letterFound; j++) {
+      for (let j = 0; j < wordLetterArray.length && !letterFound; j++) {
         if (wordLetterArray[i] === answerCheckArray[j]) {
           tempArray[i] = 1;
           answerCheckArray[j] = '-';
