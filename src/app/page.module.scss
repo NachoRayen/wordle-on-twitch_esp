@@ -3,7 +3,18 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 3rem 3rem 0;
   background-color: #18181b;
   height: 100%;
+}
+
+.link {
+  margin-top: 30px;
+  text-decoration: underline;
+}
+
+.footer {
+  margin-top: -40px;
+  font-size: 24px;
+  padding-bottom: 60px;
 }

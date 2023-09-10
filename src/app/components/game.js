@@ -209,7 +209,7 @@ export default function Game(props) {
     // console.log('playWhooshSound');
     whooshSound.play();
   }
-  
+
   const playPoint1Sound = () => {
     // console.log('playPoint1Sound');
     pointSound1.play();
@@ -255,6 +255,10 @@ export default function Game(props) {
         <Scoreboard getUserScores={getUserScores} />
       </div>
       <div className={styles.middleContainer}>
+        <div className={styles.header}>
+          <h1>Wordle on Twitch</h1>
+          <h2>https://wordle-on-twitch.vercel.app/</h2>
+        </div>
         <BigLetters answer={getAnswer} answerStatus={getAnswerStatus} isWordFound={isWordFound} playCardSound={playCardSound} />
         <Keyboard letterStatus={getLetterStatus} playPoint1Sound={playPoint1Sound} playPoint2Sound={playPoint2Sound} playPoint3Sound={playPoint3Sound} />
       </div>

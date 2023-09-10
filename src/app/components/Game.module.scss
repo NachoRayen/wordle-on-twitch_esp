@@ -13,7 +13,7 @@
   width: 760px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -24,6 +24,21 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+}
+
+.header {
+  height: 40%;
+  text-align: center;
+  opacity: 0.2;
+
+  h1 {
+    font-size: 82px;
+  }
+
+  h2 {
+    font-weight: normal;
+    font-size: 36px;
+  }
 }
 
 .wordBlockContainer {

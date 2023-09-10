@@ -70,10 +70,16 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+
       {!isConnected ? (
         !isConnecting ? (
           !isLoading ? (
-            <StartingScreen changeChannel={changeChannel} playOffline={playOffline} />
+            <>
+              <StartingScreen changeChannel={changeChannel} playOffline={playOffline} />
+              <a className={styles.link} href="https://github.com/dispencerr/wordle-on-twitch">
+                Contribute on GitHub
+              </a>
+            </>
           ) : (
             <span>Loading...</span>
           )
