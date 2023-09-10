@@ -4,7 +4,7 @@ import BigLetter from './bigLetter';
 import { gsap } from 'gsap';
 
 function BigLetters(props) {
-  const { answer, answerStatus, isWordFound } = props;
+  const { answer, answerStatus, isWordFound, playCardSound } = props;
   const answerLettersArray = answer.split('');
   const marginRight = '20px';
   const contRef = useRef(null);
@@ -15,7 +15,7 @@ function BigLetters(props) {
       const letters = letterContainer.children;
       const tl = gsap.timeline();
       tl.fromTo(letters, { y: 0 }, { y: 0, ease: "power2", duration: 3.5 });
-      tl.fromTo(letters, { y: 0 }, { y: -200, ease: "power2", duration: 0.75, stagger: 0.1 });
+      tl.fromTo(letters, { y: 0 }, { y: -200, ease: "power2", duration: 0.75, stagger: 0.1, onStart: playCardSound });
     }
   }
 
@@ -24,7 +24,7 @@ function BigLetters(props) {
     if (letterContainer && letterContainer.children.length) {
       const letters = letterContainer.children;
       const tl = gsap.timeline();
-      tl.fromTo(letters, { y: 200 }, { y: 0, ease: "power2", duration: 0.75, stagger: 0.1 });
+      tl.fromTo(letters, { y: 200 }, { y: 0, ease: "power2", duration: 0.75, stagger: 0.1, onStart: playCardSound });
     }
   }
 

@@ -5,7 +5,7 @@ import CooldownTimer from './cooldownTimer';
 import { gsap } from 'gsap';
 
 function WordBlock(props) {
-  const { word, user, color, answer, updateLetterStatus, updateAnswerStatus } = props;
+  const { word, user, color, answer, updateLetterStatus, updateAnswerStatus, playWinSound, playWhooshSound } = props;
   const [getStatusArray, setStatusArray] = useState(Array(word.length).fill(0));
   const answerLetterArray = answer.split('');
   const wordLetterArray = word.split('');
@@ -108,7 +108,7 @@ function WordBlock(props) {
   const animateWordEntry = () => {
     let wordCont = wordContRef.current;
     if (wordCont) {
-      gsap.fromTo(wordCont, { maxHeight: 0 }, { maxHeight: 80, ease: "linear", duration: 0.5 })
+      gsap.fromTo(wordCont, { maxHeight: 0 }, { maxHeight: 80, ease: "linear", duration: 0.5, onStart: playWhooshSound })
     }
   }
 
@@ -119,7 +119,7 @@ function WordBlock(props) {
       let letters = word.children;
       let tl = gsap.timeline();
       tl.fromTo(letters, { y: 0 }, { y: 0, duration: 1.5 });
-      tl.fromTo(letters, { y: 0 }, { y: -15, ease: "power2", duration: 0.45, stagger: 0.15 });
+      tl.fromTo(letters, { y: 0 }, { y: -15, ease: "power2", duration: 0.45, stagger: 0.15, onStart: playWinSound });
       tl.fromTo(letters, { y: -15 }, { y: 0, ease: "power2", duration: 0.25, stagger: 0.15, delay: -0.8 });
     }
   }

@@ -3,18 +3,29 @@ import styles from './keyboardLetter.module.scss'
 import { gsap } from 'gsap';
 
 function KeyboardLetter(props) {
-
+  const { letter, status, playPoint1Sound, playPoint2Sound, playPoint3Sound } = props;
   const scoreRef = useRef(null);
-  const { letter, status } = props;
   const [getPrevStatus, setPrevStatus] = useState(-1);
   const [getScoreDiff, setScoreDiff] = useState();
 
-  const animateScore = () => {
-    let score = scoreRef.current;
-    let tl = gsap.timeline();
-    tl.fromTo(score, { opacity: 0}, { opacity: 0, duration: 0.5 });
-    tl.fromTo(score, { opacity: 1, y: 0 }, { opacity: 0, y: -30, ease: "linear", duration: 1.5 });
-  }
+const animateScore = (status) => {
+  let score = scoreRef.current;
+  let tl = gsap.timeline();
+  tl.fromTo(score, { opacity: 0 }, { opacity: 0, duration: 0.5 });
+  tl.fromTo(score, { opacity: 1, y: 0 }, {
+    opacity: 0, y: -30, ease: "linear", duration: 1.5, onStart: () => {
+      
+      if (status === 0) {
+        playPoint1Sound();
+      }
+      else if (status === 1) {
+        playPoint2Sound();
+      } else if (status === 2) {
+        playPoint3Sound();
+      }
+    }
+  });
+}
 
   useEffect(() => {
     let diff = status - getPrevStatus;
@@ -23,7 +34,7 @@ function KeyboardLetter(props) {
       setScoreDiff();
     } else if (diff !== 0) {
       setScoreDiff(diff);
-      animateScore();
+      animateScore(status);
     }
     setPrevStatus(status);
   }, [status]);

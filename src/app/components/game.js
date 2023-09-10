@@ -23,6 +23,18 @@ export default function Game(props) {
   const prevDependencyRef = useRef();
   const wordLength = 5;
   const timeoutLength = 3000;
+  const whooshSound = new Audio('/sounds/whoosh.wav');
+  const pointSound1 = new Audio('/sounds/coin3.wav');
+  const pointSound2 = new Audio('/sounds/coin2.wav');
+  const pointSound3 = new Audio('/sounds/coin.wav');
+  const cardSound = new Audio('/sounds/card.wav');
+  const winSound = new Audio('/sounds/success.wav');
+
+  whooshSound.volume = 0.5;
+  pointSound1.volume = 0.3;
+  pointSound2.volume = 0.4;
+  pointSound3.volume = 0.5;
+  winSound.volume = 0.8;
 
   if (client) {
     client.on('message', (channel, tags, message, self) => {
@@ -177,6 +189,47 @@ export default function Game(props) {
     }
   }
 
+  const playCardSound = (n) => {
+    if (n === undefined) { n = wordLength; } // Play the sound one time for each letter
+    if (n <= 0) {
+      return;
+    }
+
+    cardSound.currentTime = 0;
+    // console.log('playCardSound');
+    cardSound.play(); // Play the audio clip
+
+    // Schedule the next play after a 0.1-second delay
+    setTimeout(() => {
+      playCardSound(n - 1); // Play the audio clip n-1 more times
+    }, 100);
+  }
+
+  const playWhooshSound = () => {
+    // console.log('playWhooshSound');
+    whooshSound.play();
+  }
+  
+  const playPoint1Sound = () => {
+    // console.log('playPoint1Sound');
+    pointSound1.play();
+  }
+
+  const playPoint2Sound = () => {
+    // console.log('playPoint2Sound');
+    pointSound2.play();
+  }
+
+  const playPoint3Sound = () => {
+    // console.log('playPoint3Sound');
+    pointSound3.play();
+  }
+
+  const playWinSound = () => {
+    // console.log('playWinSound');
+    winSound.play();
+  }
+
   const addChatMessage = (word, user, color) => {
     let newChatMessage = [word, user, color];
     setChatMessages(prevChatMessages => [...prevChatMessages, newChatMessage]);
@@ -202,13 +255,13 @@ export default function Game(props) {
         <Scoreboard getUserScores={getUserScores} />
       </div>
       <div className={styles.middleContainer}>
-        <BigLetters answer={getAnswer} answerStatus={getAnswerStatus} isWordFound={isWordFound} />
-        <Keyboard letterStatus={getLetterStatus} />
+        <BigLetters answer={getAnswer} answerStatus={getAnswerStatus} isWordFound={isWordFound} playCardSound={playCardSound} />
+        <Keyboard letterStatus={getLetterStatus} playPoint1Sound={playPoint1Sound} playPoint2Sound={playPoint2Sound} playPoint3Sound={playPoint3Sound} />
       </div>
       <div className={styles.rightContainer}>
         <div className={styles.wordBlockContainer}>
           {getChatArray.map((chatEntry, index) => (
-            <WordBlock key={index} word={chatEntry[0]} user={chatEntry[1]} color={chatEntry[2]} answer={getAnswer} updateLetterStatus={updateLetterStatus} updateAnswerStatus={updateAnswerStatus} />
+            <WordBlock key={index} word={chatEntry[0]} user={chatEntry[1]} color={chatEntry[2]} answer={getAnswer} updateLetterStatus={updateLetterStatus} updateAnswerStatus={updateAnswerStatus} playWinSound={playWinSound} playWhooshSound={playWhooshSound} />
           ))}
         </div>
         {!client ? (
