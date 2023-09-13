@@ -244,7 +244,7 @@ export default function Game(props) {
   useEffect(() => {
     if (prevDependencyRef.current !== undefined && getChatMessages.length) {
       let latestChat = getChatMessages[getChatMessages.length - 1];
-      handleWordEntry(latestChat[0].trim(), latestChat[1], latestChat[2]);
+      handleWordEntry(latestChat[0].trim().toLowerCase(), latestChat[1], latestChat[2]);
     }
     prevDependencyRef.current = getChatMessages;
   }, [getChatMessages]);
