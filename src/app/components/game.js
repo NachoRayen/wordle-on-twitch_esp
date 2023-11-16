@@ -171,7 +171,8 @@ export default function Game(props) {
 
   // Function called when a new word is guessed
   const handleWordEntry = (chat, user, color) => {
-    let word = chat.substr(0, wordLength); //twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
+    
+    let word = chat.trim(); //twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
     if (!isUserTimedOut(user)) {
       if (isWordFound) { return } // word for this round has already been found
       if (word.length !== wordLength) { return } // not the right length
