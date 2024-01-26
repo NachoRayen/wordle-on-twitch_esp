@@ -1,25 +1,25 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import './page.module.scss'
-import styles from './page.module.scss'
-import StartingScreen from './components/startingScreen';
-import Game from './components/game';
+"use client";
+import React, { useState, useEffect } from "react";
+import "./page.module.scss";
+import styles from "./page.module.scss";
+import StartingScreen from "./components/startingScreen";
+import Game from "./components/game";
 
 export default function Home() {
-  const [getClient, setClient] = useState(undefined)
+  const [getClient, setClient] = useState(undefined);
   const [getChannel, setChannel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const tmi = require('tmi.js');
+  const tmi = require("tmi.js");
 
   const playOffline = () => {
     setIsConnected(true);
-  }
+  };
 
   const changeChannel = (channel) => {
     setChannel(channel);
-  }
+  };
 
   useEffect(() => {
     if (getClient) {
@@ -35,7 +35,7 @@ export default function Home() {
         } else if (connectionTries >= 5) {
           clearInterval(tryConnection);
           alert("Connection failed");
-          setChannel('');
+          setChannel("");
           setIsConnecting(false);
         } else {
           connectionTries++;
@@ -49,8 +49,8 @@ export default function Home() {
   useEffect(() => {
     if (getChannel) {
       let client = new tmi.Client({
-        channels: [getChannel]
-      })
+        channels: [getChannel],
+      });
       setClient(client);
       client.connect();
     }
@@ -59,7 +59,7 @@ export default function Home() {
   useEffect(() => {
     // Parse the URL parameters to get the "channel" parameter
     const searchParams = new URLSearchParams(location.search);
-    const channelParam = searchParams.get('channel');
+    const channelParam = searchParams.get("channel");
 
     if (channelParam) {
       setIsConnecting(true);
@@ -70,13 +70,18 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-
       {!isConnected ? (
         !isConnecting ? (
           !isLoading ? (
             <>
-              <StartingScreen changeChannel={changeChannel} playOffline={playOffline} />
-              <a className={styles.link} href="https://github.com/dispencerr/wordle-on-twitch">
+              <StartingScreen
+                changeChannel={changeChannel}
+                playOffline={playOffline}
+              />
+              <a
+                className={styles.link}
+                href="https://github.com/dispencerr/wordle-on-twitch"
+              >
                 Contribute on GitHub
               </a>
             </>
@@ -90,5 +95,5 @@ export default function Home() {
         <Game client={getClient} />
       )}
     </main>
-  )
+  );
 }

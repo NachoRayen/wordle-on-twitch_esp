@@ -1,10 +1,12 @@
-import styles from './scoreboard.module.scss'
+import styles from "./scoreboard.module.scss";
 
 function Scoreboard(props) {
   const { getUserScores } = props;
 
   // Sort data by score in descending order
-  const sortedScores = Object.entries(getUserScores).sort((a, b) => b[1] - a[1]);
+  const sortedScores = Object.entries(getUserScores).sort(
+    (a, b) => b[1] - a[1]
+  );
 
   return (
     <div>

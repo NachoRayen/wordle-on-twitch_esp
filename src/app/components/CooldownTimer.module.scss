@@ -6,6 +6,6 @@
   position: absolute;
   left: -50px;
   border-radius: 50%;
-  background: conic-gradient(var(--c) calc(var(--p)*1%), #0000 0);
+  background: conic-gradient(var(--c) calc(var(--p) * 1%), #0000 0);
   align-self: center;
 }
