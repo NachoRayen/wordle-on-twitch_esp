@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import "./page.module.scss";
 import styles from "./page.module.scss";
 import StartingScreen from "./components/startingScreen";
 import Game from "./components/game";
 
 export default function Home() {
+  const searchParams = useSearchParams();
   const [getClient, setClient] = useState(undefined);
   const [getChannel, setChannel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,12 +33,20 @@ export default function Home() {
         if (getClient.channels.length > 0) {
           setIsConnected(true);
           clearInterval(tryConnection);
-          //update router?
+          const params = new URLSearchParams(searchParams.toString());
+          params.set("channel", getClient.getChannels()[0].slice(1));
+          window.history.pushState(null, "", `?${params.toString()}`);
         } else if (connectionTries >= 5) {
           clearInterval(tryConnection);
           alert("Connection failed");
           setChannel("");
           setIsConnecting(false);
+          const params = new URLSearchParams(searchParams.toString());
+          params.delete("channel");
+          const queryString = params.toString();
+          const newUrl = queryString ? `?${queryString}` : "/";
+          window.history.pushState(null, "", newUrl);
+          setClient(null);
         } else {
           connectionTries++;
         }
