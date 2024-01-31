@@ -195,6 +195,7 @@ function WordBlock(props) {
               key={index}
               letter={letter}
               status={getStatusArray[index]}
+              length={word.length}
             />
           ))}
         </div>

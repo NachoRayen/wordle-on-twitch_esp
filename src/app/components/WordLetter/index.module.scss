@@ -1,14 +1,13 @@
 @use "sass:math";
 @import "@/app/styles/mixins";
 
-$size: varSize(60);
-
 .letter {
-  width: $size;
-  height: $size;
+  --w: 60px;
+  width: var(--w);
+  height: var(--w);
   margin: 0 varSize(5);
   text-align: center;
-  line-height: $size;
+  line-height: var(--w);
   border: 3px solid rgb(38, 38, 38);
   border-radius: 25%;
   font-size: varSize(30);

@@ -6,8 +6,8 @@ import Keyboard from "../Keyboard";
 import BigLetters from "../BigLetters";
 import WordBlock from "../WordBlock";
 import EntryField from "../EntryField";
-import answerList from "@/app/solutionwords.json";
-import wordList from "@/app/words.json";
+import answerList from "@/app/data/5letters/solutionwords.json";
+import wordList from "@/app/data/5letters/words.json";
 
 export default function Game(props) {
   const { client } = props;

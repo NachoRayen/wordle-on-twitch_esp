@@ -5,9 +5,10 @@
   font-size: varSize(30);
   align-self: stretch;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 
   input {
+    width: 10em;
     margin-right: varSize(5);
     font-size: varSize(30);
     padding: varSize(5);
