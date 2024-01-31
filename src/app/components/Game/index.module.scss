@@ -1,3 +1,5 @@
+@import "@/app/styles/mixins";
+
 .gameContainer {
   display: flex;
   width: 100%;
@@ -6,11 +8,11 @@
 }
 
 .leftContainer {
-  width: 250px;
+  width: varSize(250);
 }
 
 .middleContainer {
-  width: 760px;
+  width: varSize(760);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -18,7 +20,7 @@
 }
 
 .rightContainer {
-  width: 475px;
+  width: varSize(475);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -32,12 +34,12 @@
   opacity: 0.2;
 
   h1 {
-    font-size: 82px;
+    font-size: varSize(82);
   }
 
   h2 {
     font-weight: normal;
-    font-size: 36px;
+    font-size: varSize(36);
   }
 }
 

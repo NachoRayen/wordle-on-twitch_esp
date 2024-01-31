@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import "./page.module.scss";
 import styles from "./page.module.scss";
 import StartingScreen from "./components/StartingScreen";
 import Game from "./components/Game";

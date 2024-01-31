@@ -1,19 +1,21 @@
+@import "@/app/styles/mixins";
+
 .entryContainer {
-  margin-top: 20px;
-  font-size: 30px;
+  margin-top: varSize(20);
+  font-size: varSize(30);
   align-self: stretch;
   display: flex;
   justify-content: space-between;
 
   input {
-    margin-right: 5px;
-    font-size: 30px;
-    padding: 5px;
+    margin-right: varSize(5);
+    font-size: varSize(30);
+    padding: varSize(5);
   }
 
   button {
-    font-size: 30px;
+    font-size: varSize(30);
     cursor: pointer;
-    padding: 5px;
+    padding: varSize(5);
   }
 }

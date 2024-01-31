@@ -1,6 +1,8 @@
+@import "@/app/styles/mixins";
+
 .bigLetters {
   display: flex;
-  margin-bottom: 50px;
+  margin-bottom: varSize(50);
   width: 100%;
   overflow: hidden;
 }

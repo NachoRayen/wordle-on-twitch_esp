@@ -1,15 +1,17 @@
 @use "sass:math";
-$size: 60px;
+@import "@/app/styles/mixins";
+
+$size: varSize(60);
 
 .letter {
   width: $size;
   height: $size;
-  margin: 0 5px;
+  margin: 0 varSize(5);
   text-align: center;
   line-height: $size;
   border: 3px solid rgb(38, 38, 38);
-  border-radius: math.div($size, 4);
-  font-size: 30px;
+  border-radius: 25%;
+  font-size: varSize(30);
   box-sizing: content-box;
 }
 

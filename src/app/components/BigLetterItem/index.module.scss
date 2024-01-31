@@ -1,3 +1,5 @@
+@import "@/app/styles/mixins";
+
 .letter {
   --w: 100px;
   width: var(--w);
@@ -6,15 +8,15 @@
   border-radius: 15%;
   position: relative;
   &:not(:last-child) {
-    margin-right: 20px;
+    margin-right: varSize(20);
   }
 }
 
 .text {
-  font-size: 60px;
-  line-height: 60px;
+  font-size: varSize(60);
+  line-height: varSize(60);
   position: absolute;
-  top: calc(50% - 30px);
+  top: calc(50% - varSize(30));
   width: 100%;
   left: 0;
   text-align: center;

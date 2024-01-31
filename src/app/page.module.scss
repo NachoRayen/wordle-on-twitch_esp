@@ -1,3 +1,5 @@
+@import "@/app/styles/mixins";
+
 .main {
   display: flex;
   flex-direction: column;
@@ -10,12 +12,12 @@
 }
 
 .link {
-  margin-top: 30px;
+  margin-top: varSize(30);
   text-decoration: underline;
 }
 
 .footer {
-  margin-top: -40px;
-  font-size: 24px;
-  padding-bottom: 60px;
+  margin-top: varSize(-40);
+  font-size: varSize(24);
+  padding-bottom: varSize(60);
 }

@@ -1,26 +1,28 @@
+@import "@/app/styles/mixins";
+
 .channelInput {
-  padding-top: 150px;
-  margin-top: 20px;
-  font-size: 30px;
+  padding-top: varSize(150);
+  margin-top: varSize(20);
+  font-size: varSize(30);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-bottom: 50px;
+  margin-bottom: varSize(50);
 }
 
 .text {
-  margin-right: 15px;
+  margin-right: varSize(15);
 }
 
 .input {
-  margin-right: 15px;
-  font-size: 30px;
-  padding: 5px;
+  margin-right: varSize(15);
+  font-size: varSize(30);
+  padding: varSize(5);
 }
 
 .button {
-  font-size: 30px;
-  padding: 5px;
+  font-size: varSize(30);
+  padding: varSize(5);
   cursor: pointer;
 }

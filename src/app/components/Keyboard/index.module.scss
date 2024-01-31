@@ -1,3 +1,5 @@
+@import "@/app/styles/mixins";
+
 .keyboard {
   display: flex;
   flex-direction: column;
@@ -7,5 +9,5 @@
 
 .row {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: varSize(10);
 }

@@ -1,12 +1,14 @@
+@import "@/app/styles/mixins";
+
 .scoreboardTitle {
-  margin-bottom: 20px;
-  font-size: 40px;
+  margin-bottom: varSize(20);
+  font-size: varSize(40);
 }
 
 .scoreboardItem {
   display: flex;
   justify-content: space-between;
-  width: 250px;
-  margin-bottom: 5px;
-  font-size: 20px;
+  width: varSize(250);
+  margin-bottom: varSize(5);
+  font-size: varSize(20);
 }

@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 function BigLetters(props) {
   const { answer, answerStatus, isWordFound, playCardSound } = props;
   const answerLettersArray = answer.split("");
-  const marginRight = "20px";
+  const marginRight = "min(20px, 1.25vw)";
   const contRef = useRef(null);
 
   const bringLettersOut = () => {
