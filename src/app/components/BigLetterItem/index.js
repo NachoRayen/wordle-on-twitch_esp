@@ -1,6 +1,6 @@
-import styles from "./BigLetter.module.scss";
+import styles from "./index.module.scss";
 
-function BigLetter(props) {
+function BigLetterItem(props) {
   const { letter, status, width } = props;
 
   return (
@@ -13,4 +13,4 @@ function BigLetter(props) {
   );
 }
 
-export default BigLetter;
+export default BigLetterItem;

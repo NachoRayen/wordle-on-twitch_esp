@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import styles from "./BigLetters.module.scss";
-import BigLetter from "./bigLetter";
+import styles from "./index.module.scss";
+import BigLetter from "../BigLetterItem";
 import { gsap } from "gsap";
 
 function BigLetters(props) {

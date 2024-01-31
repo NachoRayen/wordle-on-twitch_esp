@@ -1,5 +1,5 @@
-import styles from "./Keyboard.module.scss";
-import KeyboardLetter from "./keyboardLetter";
+import styles from "./index.module.scss";
+import KeyboardLetter from "../KeyboardLetter";
 
 function Keyboard(props) {
   const { letterStatus, playPoint1Sound, playPoint2Sound, playPoint3Sound } =

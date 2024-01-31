@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import styles from "./Game.module.scss";
-import Scoreboard from "./scoreboard";
-import Keyboard from "./keyboard";
-import BigLetters from "./bigLetters";
-import WordBlock from "./wordBlock";
-import EntryField from "./entryField";
-import answerList from "../solutionwords.json";
-import wordList from "../words.json";
+import styles from "./index.module.scss";
+import Scoreboard from "../Scoreboard";
+import Keyboard from "../Keyboard";
+import BigLetters from "../BigLetters";
+import WordBlock from "../WordBlock";
+import EntryField from "../EntryField";
+import answerList from "@/app/solutionwords.json";
+import wordList from "@/app/words.json";
 
 export default function Game(props) {
   const { client } = props;

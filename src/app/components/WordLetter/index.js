@@ -1,4 +1,4 @@
-import styles from "./WordLetter.module.scss";
+import styles from "./index.module.scss";
 
 function WordLetter(props) {
   const { letter, status } = props;

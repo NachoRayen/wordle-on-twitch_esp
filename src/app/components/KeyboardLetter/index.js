@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import styles from "./keyboardLetter.module.scss";
+import styles from "./index.module.scss";
 import { gsap } from "gsap";
 
 function KeyboardLetter(props) {

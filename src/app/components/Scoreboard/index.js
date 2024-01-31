@@ -1,4 +1,4 @@
-import styles from "./scoreboard.module.scss";
+import styles from "./index.module.scss";
 
 function Scoreboard(props) {
   const { getUserScores } = props;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import styles from "./WordBlock.module.scss";
-import WordLetter from "./wordLetter";
-import CooldownTimer from "./cooldownTimer";
+import styles from "./index.module.scss";
+import WordLetter from "../WordLetter";
+import CooldownTimer from "../CooldownTimer";
 import { gsap } from "gsap";
 
 function WordBlock(props) {

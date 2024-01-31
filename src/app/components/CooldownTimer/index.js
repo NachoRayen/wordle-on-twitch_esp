@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import styles from "./CooldownTimer.module.scss";
+import styles from "./index.module.scss";
 
 function CooldownTimer(props) {
   const timerCircleRef = useRef(null);

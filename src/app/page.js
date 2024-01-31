@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import "./page.module.scss";
 import styles from "./page.module.scss";
-import StartingScreen from "./components/startingScreen";
-import Game from "./components/game";
+import StartingScreen from "./components/StartingScreen";
+import Game from "./components/Game";
 
 export default function Home() {
   const searchParams = useSearchParams();

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./EntryField.module.scss";
+import styles from "./index.module.scss";
 
 function EntryField(props) {
   const { addChatMessage, wordLength } = props;
