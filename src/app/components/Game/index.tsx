@@ -39,6 +39,7 @@ const Game: React.FC<GameProps> = ({ client }) => {
   const [getAnswer, setAnswer] = useState(""); // The current word solution
   const [getGuessArray, setGuessArray] = useState<string[]>([]); // Array of all words guessed this round
   const [getChatArray, setChatArray] = useState<Chat[]>([]); // Array of all valid chat guesses (as chat objects) this round
+  const [getLatestChat, setLatestChat] = useState<Chat>(); // The latest chat message that will be checked for validity
   const [getLetterFoundArray, setLetterFoundArray] = useState<boolean[]>([]); // Array detecting the found status of each individual letter in the solution
   const [getLetterStatus, setLetterStatus] = useState<LetterStatusObject>({}); // Object tracking the status of each letter in the alphabet for this round
   const [getTimeoutStatus, setTimeoutStatus] = useState<TimeoutStatusObject>(
@@ -280,6 +281,15 @@ const Game: React.FC<GameProps> = ({ client }) => {
   };
 
   /**
+   * Call handleChatEntry when a new chat is added
+   */
+  useEffect(() => {
+    if (getLatestChat) {
+      handleChatEntry(getLatestChat);
+    }
+  }, [getLatestChat]);
+
+  /**
    * On initial mounting, start listening for chat messages if connected to twitch, and do the set up for the first round.
    */
   useEffect(() => {
@@ -297,7 +307,7 @@ const Game: React.FC<GameProps> = ({ client }) => {
           isMod: isMod,
         };
 
-        handleChatEntry(newChat);
+        setLatestChat(newChat);
       });
     }
 
