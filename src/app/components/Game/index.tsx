@@ -260,26 +260,6 @@ const Game: React.FC<GameProps> = ({ client }) => {
     playCardSound();
   };
 
-  const playWhooshSound = () => {
-    playSound(SOUNDS.whooshSound);
-  };
-
-  const playPoint1Sound = () => {
-    playSound(SOUNDS.pointSound1);
-  };
-
-  const playPoint2Sound = () => {
-    playSound(SOUNDS.pointSound2);
-  };
-
-  const playPoint3Sound = () => {
-    playSound(SOUNDS.pointSound3);
-  };
-
-  const playWinSound = () => {
-    playSound(SOUNDS.winSound);
-  };
-
   /**
    * Call handleChatEntry when a new chat is added
    */
@@ -335,9 +315,9 @@ const Game: React.FC<GameProps> = ({ client }) => {
         />
         <Keyboard
           letterStatus={getLetterStatus}
-          playPoint1Sound={playPoint1Sound}
-          playPoint2Sound={playPoint2Sound}
-          playPoint3Sound={playPoint3Sound}
+          playPoint1Sound={() => playSound(SOUNDS.pointSound1)}
+          playPoint2Sound={() => playSound(SOUNDS.pointSound2)}
+          playPoint3Sound={() => playSound(SOUNDS.pointSound3)}
         />
       </div>
       <div className={styles.rightContainer}>
@@ -350,8 +330,8 @@ const Game: React.FC<GameProps> = ({ client }) => {
               answer={getAnswer}
               updateLetterStatus={updateLetterStatus}
               updateLetterFoundArray={updateLetterFoundArray}
-              playWinSound={playWinSound}
-              playWhooshSound={playWhooshSound}
+              playWinSound={() => playSound(SOUNDS.winSound)}
+              playWhooshSound={() => playSound(SOUNDS.whooshSound)}
             />
           ))}
         </div>
