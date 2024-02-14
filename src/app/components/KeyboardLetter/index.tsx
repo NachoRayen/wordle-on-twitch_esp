@@ -64,6 +64,7 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
     if (status === LetterStatus.Unset) {
       // If the status was changed to "unset", then the keyboard was reset because a new round started
       setScoreChangeAmount(0);
+      setPreviousStatus(LetterStatus.Unset);
     } else if (scoreDifference !== 0) {
       setScoreChangeAmount(scoreDifference);
       // Play the animation, text color based on the new status
