@@ -1,9 +1,12 @@
+import { UserScoresObject } from "@/app/types/types";
 import styles from "./index.module.scss";
 
-function Scoreboard(props) {
-  const { getUserScores } = props;
+type ScoreboardProps = {
+  getUserScores: UserScoresObject;
+};
 
-  // Sort data by score in descending order
+const Scoreboard: React.FC<ScoreboardProps> = ({ getUserScores }) => {
+  // Sort scores in descending order
   const sortedScores = Object.entries(getUserScores).sort(
     (a, b) => b[1] - a[1]
   );
@@ -21,6 +24,6 @@ function Scoreboard(props) {
       </ol>
     </div>
   );
-}
+};
 
 export default Scoreboard;

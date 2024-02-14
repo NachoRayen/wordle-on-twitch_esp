@@ -1,14 +1,29 @@
-import { useEffect, useRef } from "react";
+import React, { RefObject, useEffect, useRef } from "react";
 import styles from "./index.module.scss";
 import BigLetter from "../BigLetterItem";
 import { gsap } from "gsap";
 
-function BigLetters(props) {
-  const { answer, answerStatus, isWordFound, playCardSound } = props;
-  const answerLettersArray = answer.split("");
-  const marginRight = "min(20px, 1.25vw)";
-  const contRef = useRef(null);
+type BigLettersProps = {
+  answer: string;
+  letterFoundArray: boolean[];
+  isWordFound: boolean;
+  playCardSounds: (number) => void;
+};
 
+const LETTER_MARGIN_RIGHT = "min(20px, 1.25vw)";
+
+const BigLetters: React.FC<BigLettersProps> = ({
+  answer,
+  letterFoundArray,
+  isWordFound,
+  playCardSounds,
+}) => {
+  const answerLettersArray = answer.split("");
+  const contRef: RefObject<HTMLDivElement> = useRef(null);
+
+  /**
+   * Animate the letters leaving the board
+   */
   const bringLettersOut = () => {
     const letterContainer = contRef.current;
     if (letterContainer && letterContainer.children.length) {
@@ -20,15 +35,18 @@ function BigLetters(props) {
         { y: 0 },
         {
           y: -200,
-          ease: "power2",
-          duration: 0.75,
+          ease: "sine.in",
+          duration: 0.5,
           stagger: 0.1,
-          onStart: playCardSound,
+          onStart: playCardSounds,
         }
       );
     }
   };
 
+  /**
+   * Animate the letters entering the board
+   */
   const bringLettersIn = () => {
     const letterContainer = contRef.current;
     if (letterContainer && letterContainer.children.length) {
@@ -42,12 +60,15 @@ function BigLetters(props) {
           ease: "power2",
           duration: 0.75,
           stagger: 0.1,
-          onStart: playCardSound,
+          onStart: playCardSounds,
         }
       );
     }
   };
 
+  /**
+   * Bring the letters in or out when the value of isWordFound changes and on the initial mounting of the component
+   */
   useEffect(() => {
     if (isWordFound === false) {
       bringLettersIn();
@@ -62,14 +83,14 @@ function BigLetters(props) {
         <BigLetter
           key={index}
           letter={letter}
-          status={answerStatus[index]}
-          width={`calc((100% - (${marginRight}*${answer.length - 1}))/${
+          isLetterFound={letterFoundArray[index]}
+          width={`calc((100% - (${LETTER_MARGIN_RIGHT}*${answer.length - 1}))/${
             answer.length
           })`}
         />
       ))}
     </div>
   );
-}
+};
 
 export default BigLetters;
