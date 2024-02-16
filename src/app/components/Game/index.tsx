@@ -31,6 +31,28 @@ const SOUNDS = {
 const BETWEEN_ROUND_DELAY = 4500;
 const TIMEOUT_LENGTH = 3000; // How long a user is timed out for, in milliseconds
 
+/**
+ * Load the sounds into the game
+ */
+const preloadSounds = () => {
+  Object.values(SOUNDS).forEach((sound) => {
+    const audio = new Audio(sound.file);
+    audio.volume = sound.volume;
+    audio.preload = "auto";
+  });
+};
+
+/**
+ * Play a given sound
+ *
+ * @param {Sound} soundObject - Sound to be played
+ */
+const playSound = (soundObject: Sound): void => {
+  const soundFile = new Audio(soundObject.file);
+  soundFile.volume = soundObject.volume;
+  soundFile.play();
+};
+
 type GameProps = {
   client: Client;
 };
@@ -49,28 +71,6 @@ const Game: React.FC<GameProps> = ({ client }) => {
   const [isWordFound, setIsWordFound] = useState(false); // Turns true after the word has been solved, blocking guesses until the round is reset
   const wordLength = 5; // Length of the solution and valid guesses
   const isConnected = client !== null;
-
-  /**
-   * Load the sounds into the game
-   */
-  const preloadSounds = () => {
-    Object.values(SOUNDS).forEach((sound) => {
-      const audio = new Audio(sound.file);
-      audio.volume = sound.volume;
-      audio.preload = "auto";
-    });
-  };
-
-  /**
-   * Play a given sound
-   *
-   * @param {Sound} soundObject - Sound to be played
-   */
-  const playSound = (soundObject: Sound): void => {
-    const soundFile = new Audio(soundObject.file);
-    soundFile.volume = soundObject.volume;
-    soundFile.play();
-  };
 
   /**
    * Time out a user, preventing them from guessing for the TIMEOUT_LENGTH variable
@@ -276,7 +276,7 @@ const Game: React.FC<GameProps> = ({ client }) => {
     if (isConnected) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       client.on("message", (channel, tags, message, self) => {
-        const word = message.trim(); //twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
+        const word = message.trim(); // Twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
         const user = tags["display-name"] || "User";
         const color = tags["color"] || "#FFFFFF";
         const isMod = tags.mod === true || tags.badges?.broadcaster === "1";
