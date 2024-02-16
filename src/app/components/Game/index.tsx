@@ -114,7 +114,7 @@ const Game: React.FC<GameProps> = ({ client }) => {
    * @param {LetterStatus[]} statusFromGuess - The array of letter statuses from a guess.
    */
   const updateLetterFoundArray = (statusFromGuess) => {
-    let tempLetterFoundArray = [...getLetterFoundArray];
+    const tempLetterFoundArray = [...getLetterFoundArray];
     for (let i = 0; i < statusFromGuess.length; i++) {
       if (statusFromGuess[i] === LetterStatus.LetterInCorrectPlace) {
         tempLetterFoundArray[i] = true;
@@ -144,7 +144,7 @@ const Game: React.FC<GameProps> = ({ client }) => {
     Object.keys(statusObject).forEach(function (letter) {
       if (getLetterStatus[letter] < statusObject[letter]) {
         // Only update if the status has increased in value
-        let letterDifference = statusObject[letter] - getLetterStatus[letter];
+        const letterDifference = statusObject[letter] - getLetterStatus[letter];
         scoreChange += letterDifference;
         setLetterStatus((prevObject) => ({
           ...prevObject,
@@ -162,8 +162,8 @@ const Game: React.FC<GameProps> = ({ client }) => {
    * @param {number} scoreChange - Interval to increase the score by
    */
   const updateScore = (user: string, scoreChange: number) => {
-    let currentScore = getUserScores[user] || 0;
-    let newScore = currentScore + scoreChange;
+    const currentScore = getUserScores[user] || 0;
+    const newScore = currentScore + scoreChange;
     setUserScores((prevObject) => ({
       ...prevObject,
       [user]: newScore,
@@ -274,11 +274,12 @@ const Game: React.FC<GameProps> = ({ client }) => {
    */
   useEffect(() => {
     if (isConnected) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       client.on("message", (channel, tags, message, self) => {
-        let word = message.trim(); //twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
-        let user = tags["display-name"] || "User";
-        let color = tags["color"] || "#FFFFFF";
-        let isMod = tags.mod === true || tags.badges?.broadcaster === "1";
+        const word = message.trim(); //twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
+        const user = tags["display-name"] || "User";
+        const color = tags["color"] || "#FFFFFF";
+        const isMod = tags.mod === true || tags.badges?.broadcaster === "1";
 
         const newChat: Chat = {
           word: word,

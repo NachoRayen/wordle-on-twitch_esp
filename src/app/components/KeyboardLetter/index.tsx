@@ -28,8 +28,8 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
    * @param {LetterStatus} status - The new letter status
    */
   const animateScore = (status) => {
-    let score = scoreRef.current;
-    let tl = gsap.timeline();
+    const score = scoreRef.current;
+    const tl = gsap.timeline();
     tl.fromTo(score, { opacity: 0 }, { opacity: 0, duration: 0.5 });
     tl.fromTo(
       score,
@@ -60,7 +60,7 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
    * When the letter status changes, update the scoring amount and play the scoring animation if necessary
    */
   useEffect(() => {
-    let scoreDifference = status - getPreviousStatus; // Each letter status has a corresponding value; subtract the previous status from the new status to get the value difference
+    const scoreDifference = status - getPreviousStatus; // Each letter status has a corresponding value; subtract the previous status from the new status to get the value difference
     if (status === LetterStatus.Unset) {
       // If the status was changed to "unset", then the keyboard was reset because a new round started
       setScoreChangeAmount(0);

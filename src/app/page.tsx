@@ -6,6 +6,7 @@ import "@/app/styles/globals.css";
 import Game from "@/app/components/Game";
 import StartingScreen from "@/app/components/StartingScreen";
 import { Client } from "tmi.js";
+import tmi from "tmi.js";
 
 const CONNECTION_RETRY_INTERVAL = 500; // Amount to wait between connection attempts, in ms
 const MAX_CONNECTION_TRIES = 5; // Number of times to try connecting before giving up
@@ -17,7 +18,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true); // If the game is in the loading state
   const [isConnecting, setIsConnecting] = useState(false); // If the game is attempting to connect
   const [isConnected, setIsConnected] = useState(false); // If the game has successfully connected
-  const tmi = require("tmi.js");
 
   /**
    * Set the game up in offline mode (change the connected state to true but keep the client as null)
@@ -33,6 +33,7 @@ export default function Home() {
    */
   const testConnection = (client: Client): void => {
     setIsConnecting(true);
+    // eslint-disable-next-line prefer-const
     let tryConnection: NodeJS.Timeout;
     let connectionTries = 0;
 
@@ -72,7 +73,7 @@ export default function Home() {
    */
   useEffect(() => {
     if (getChannel) {
-      let client: Client = new tmi.Client({
+      const client: Client = new tmi.Client({
         channels: [getChannel],
       });
       setClient(client);

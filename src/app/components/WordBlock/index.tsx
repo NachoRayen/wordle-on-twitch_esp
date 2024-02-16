@@ -69,7 +69,7 @@ const adjustConstrast = (hexCode: string): string => {
   }
 
   // Increase brightness of the color until contrast is met
-  let adjustedColor: RGBColor = [...color];
+  const adjustedColor: RGBColor = [...color];
   while (contrastRatio(adjustedColor, background) < MINIMUM_CONTRAST_RATIO) {
     for (let i = 0; i < 3; i++) {
       adjustedColor[i] = Math.min(255, adjustedColor[i] + 10);
@@ -116,10 +116,10 @@ const WordBlock: React.FC<WordBlockProps> = ({
    * Compare the guessed word with the answer and adjust the statusArray based on whether each letter is in the answer and in the right place
    */
   const initializeStatusArray = (): void => {
-    let letterStatusArrayForWord: LetterStatus[] = Array(word.length).fill(
+    const letterStatusArrayForWord: LetterStatus[] = Array(word.length).fill(
       LetterStatus.LetterNotInWord
     ); // Assume all letters are incorrect by default
-    let answerCheckArray = [...answerLetterArray];
+    const answerCheckArray = [...answerLetterArray];
 
     //Loop through the letters and check if correct letter is in correct space
     for (let i = 0; i < wordLetterArray.length; i++) {
@@ -147,7 +147,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
     setStatusArray([...letterStatusArrayForWord]);
 
     //send letter data to game component to update keyboard
-    let letterStatusUpdate: LetterStatusObject = {};
+    const letterStatusUpdate: LetterStatusObject = {};
     for (let i = 0; i < wordLetterArray.length; i++) {
       if (
         !letterStatusUpdate[wordLetterArray[i]] ||
@@ -164,9 +164,9 @@ const WordBlock: React.FC<WordBlockProps> = ({
    * Play the animation of the bonus points for solving the word
    */
   const animatesolveBonus = (): void => {
-    let solveBonus = solveBonusRef.current;
+    const solveBonus = solveBonusRef.current;
     if (solveBonus) {
-      let tl = gsap.timeline();
+      const tl = gsap.timeline();
       tl.fromTo(solveBonus, { opacity: 0 }, { opacity: 0, duration: 1.5 });
       tl.fromTo(
         solveBonus,
@@ -180,7 +180,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
    * Animate the word guess sliding in
    */
   const animateWordEntry = (): void => {
-    let wordContainer = wordContainerRef.current;
+    const wordContainer = wordContainerRef.current;
     if (wordContainer) {
       gsap.fromTo(
         wordContainer,
@@ -199,11 +199,11 @@ const WordBlock: React.FC<WordBlockProps> = ({
    * Animate the letter wave on a correct guess
    */
   const animateLettersOnWin = (): void => {
-    let wordElement = wordElementRef.current;
-    let wordContainer = wordContainerRef.current;
+    const wordElement = wordElementRef.current;
+    const wordContainer = wordContainerRef.current;
     if (wordElement && wordElement.children && wordContainer) {
-      let letters = wordElement.children;
-      let tl = gsap.timeline();
+      const letters = wordElement.children;
+      const tl = gsap.timeline();
       tl.fromTo(letters, { y: 0 }, { y: 0, duration: 1.5 });
       tl.fromTo(
         letters,
