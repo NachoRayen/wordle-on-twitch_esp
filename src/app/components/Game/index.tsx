@@ -276,7 +276,7 @@ const Game: React.FC<GameProps> = ({ client }) => {
     if (isConnected) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       client.on("message", (channel, tags, message, self) => {
-        const word = message.trim(); // Twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
+        const word = message.trim().toLowerCase(); // Twitch adds white space to allow the broadcaster to repeat the same chat repeatedly it seems
         const user = tags["display-name"] || "User";
         const color = tags["color"] || "#FFFFFF";
         const isMod = tags.mod === true || tags.badges?.broadcaster === "1";

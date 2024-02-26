@@ -37,10 +37,11 @@ const EntryField: React.FC<EntryFieldProps> = ({
    * When the submit button is clicked, call the function to process the chat entry
    */
   const handleButtonClick = () => {
+    const word = getWord.toLowerCase();
     if (getWord.length === wordLength) {
       setWord(""); //Clear input field
       const newChatMessage: Chat = {
-        word: getWord,
+        word: word,
         user: "User",
         color: "#FFFFFF",
         isMod: true,
