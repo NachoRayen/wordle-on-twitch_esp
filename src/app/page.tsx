@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.scss";
 import "@/app/styles/globals.css";
 import Game from "@/app/components/Game";
@@ -12,7 +12,9 @@ const CONNECTION_RETRY_INTERVAL = 500; // Amount to wait between connection atte
 const MAX_CONNECTION_TRIES = 5; // Number of times to try connecting before giving up
 
 export default function Home() {
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const channelParam = searchParams.get("channel");
   const [getClient, setClient] = useState<Client | null>(null); // The Client object containing the channel to connect to using the Twitch chat API
   const [getChannel, setChannel] = useState<string | null>(null); // The Twitch channel to connect to
   const [isLoading, setIsLoading] = useState(true); // If the game is in the loading state
@@ -46,7 +48,7 @@ export default function Home() {
         // Update the browser URL
         const params = new URLSearchParams(searchParams.toString());
         params.set("channel", client.getChannels()[0].slice(1));
-        window.history.pushState(null, "", `?${params.toString()}`);
+        router.push(`?${params.toString()}`);
       } else if (connectionTries >= MAX_CONNECTION_TRIES) {
         // Connection was unsuccessful and tried too many times
         clearInterval(tryConnection);
@@ -57,7 +59,7 @@ export default function Home() {
         params.delete("channel");
         const queryString = params.toString();
         const newUrl = queryString ? `?${queryString}` : "/";
-        window.history.pushState(null, "", newUrl);
+        router.push(newUrl);
         setClient(null);
       } else {
         // Connection was unsuccessful, increase the count of attempts so far
@@ -86,9 +88,6 @@ export default function Home() {
    * Parse the URL parameters to get the "channel" parameter and connect if it exists
    */
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const channelParam = searchParams.get("channel");
-
     if (channelParam) {
       setIsConnecting(true);
       setChannel(channelParam);
