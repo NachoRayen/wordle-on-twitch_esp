@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 
