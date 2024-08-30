@@ -72,7 +72,7 @@ const BigLetters: React.FC<BigLettersProps> = ({
   useEffect(() => {
     if (isWordFound === false) {
       bringLettersIn();
-    } else if (isWordFound === true) {
+    } else {
       bringLettersOut();
     }
   }, [isWordFound, contRef?.current?.children]);
