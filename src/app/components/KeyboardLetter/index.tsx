@@ -22,6 +22,15 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
   const [getPreviousStatus, setPreviousStatus] = useState(LetterStatus.Unset);
   const [getScoreChangeAmount, setScoreChangeAmount] = useState<number>(0);
 
+  const setScoreClasses = (): string => {
+    const statusClasses = {
+      [LetterStatus.LetterInCorrectPlace]: styles.greenScore,
+      [LetterStatus.LetterInWrongPlace]: styles.yellowScore,
+    };
+
+    return `${styles.score} ${statusClasses[status] || ""}`.trim();
+  };
+
   /**
    * Play the animation for the score event based on what the letter status has changed to
    *
@@ -86,16 +95,7 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
           : ""
       }`}
     >
-      <div
-        ref={scoreRef}
-        className={`${styles.score} ${
-          status === LetterStatus.LetterInCorrectPlace
-            ? styles.greenScore
-            : status === LetterStatus.LetterInWrongPlace
-            ? styles.yellowScore
-            : ""
-        } `}
-      >
+      <div ref={scoreRef} className={setScoreClasses()}>
         +{getScoreChangeAmount}
       </div>
       {letter}

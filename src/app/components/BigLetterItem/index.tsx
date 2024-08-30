@@ -12,16 +12,16 @@ const BigLetterItem: React.FC<BigLetterItemProps> = ({
   isLetterFound,
   width,
 }) => {
+  const setLetterClasses = (): string => {
+    return `${styles.letter} ${isLetterFound ? styles.green : ""}`.trim();
+  };
+
   return (
     <div
-      className={`${styles.letter} ${
-        isLetterFound === true ? styles.green : ""
-      }`}
+      className={setLetterClasses()}
       style={{ "--w": width } as React.CSSProperties}
     >
-      <span className={styles.text}>
-        {isLetterFound === true ? letter : ""}
-      </span>
+      <span className={styles.text}>{isLetterFound ? letter : ""}</span>
     </div>
   );
 };
