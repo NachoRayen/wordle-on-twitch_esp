@@ -109,7 +109,7 @@ export default function Home() {
                 className={styles.link}
                 href="https://github.com/dispencerr/wordle-on-twitch"
               >
-                Contribute on GitHub
+                Instructions & Source Code
               </a>
             </>
           ) : (
