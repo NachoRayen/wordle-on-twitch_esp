@@ -108,6 +108,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
   const answerLetterArray = answer.split(""); // Array of each letter in the answer string
   const wordLetterArray = word.split(""); // Array of each letter in the guess string
   const solveBonus = word.length; // Bonus points for solving the word
+  const isCorrectAnswer = word === answer;
   const wordContainerRef: RefObject<HTMLDivElement> = useRef(null);
   const wordElementRef: RefObject<HTMLDivElement> = useRef(null);
   const solveBonusRef: RefObject<HTMLDivElement> = useRef(null);
@@ -230,7 +231,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
   useEffect(() => {
     initializeStatusArray();
     animateWordEntry();
-    if (word === answer) {
+    if (isCorrectAnswer) {
       animateLettersOnWin();
       animatesolveBonus();
     }
@@ -239,7 +240,7 @@ const WordBlock: React.FC<WordBlockProps> = ({
   return (
     <div className={styles.blockCont} ref={wordContainerRef}>
       <div className={styles.block}>
-        {word === answer ? (
+        {isCorrectAnswer ? (
           <div ref={solveBonusRef} className={styles.solveBonus}>
             +{solveBonus}
           </div>
