@@ -12,7 +12,7 @@ $size2: varSize(60);
   line-height: $size2;
   border: 3px solid rgb(38, 38, 38);
   border-radius: 25%;
-  font-size: varSize(30);
+  font-size: varSize(36);
   box-sizing: content-box;
   background-color: rgb(37, 37, 37);
 }
@@ -23,6 +23,7 @@ $size2: varSize(60);
 
 .yellow {
   background-color: goldenrod;
+  color: black;
 }
 
 @import "@/app/styles/mixins";
