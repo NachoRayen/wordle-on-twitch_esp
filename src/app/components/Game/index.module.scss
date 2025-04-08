@@ -20,7 +20,7 @@
 }
 
 .rightContainer {
-  width: varSize(475);
+  width: varSize(575);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@
 .wordBlockContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-end;
   width: 100%;
   overflow: hidden;
