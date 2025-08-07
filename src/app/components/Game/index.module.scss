@@ -3,7 +3,7 @@
 .gameContainer {
   display: flex;
   width: 100%;
-  height: 80vh;
+  height: max(100%, 80vh);
   justify-content: space-between;
 }
 
@@ -13,19 +13,23 @@
 
 .middleContainer {
   width: varSize(760);
+  min-width: 310px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin: 0 5px;
 }
 
 .rightContainer {
   width: varSize(575);
+  max-height: varSize(840);
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  align-self: flex-end;
 }
 
 .header {
@@ -33,7 +37,7 @@
   opacity: 0.2;
 
   h1 {
-    font-size: varSize(82);
+    font-size: varSize(80);
   }
 
   h2 {
